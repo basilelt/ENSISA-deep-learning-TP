@@ -1,4 +1,4 @@
-FROM python:3.9-slim AS tf-builder
+FROM python:3.9-slim-bullseye AS tf-builder
 
 ARG TF_VERSION=v2.8.0
 ARG TARGETARCH
@@ -45,7 +45,7 @@ RUN yes "" | ./configure
 RUN bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package
 RUN ./bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tf_pkg
 
-FROM python:3.9-slim
+FROM python:3.9-slim-bullseye
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libstdc++6 \

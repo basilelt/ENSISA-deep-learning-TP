@@ -4,65 +4,72 @@ from werkzeug.utils import secure_filename
 
 import os
 
-UPLOAD_FOLDER = './downloads'
-ALLOWED_EXTENSIONS = {'jpg', 'jpeg'}
+UPLOAD_FOLDER = "./downloads"
+ALLOWED_EXTENSIONS = {"jpg", "jpeg"}
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = os.path.abspath(UPLOAD_FOLDER)
+app.config["UPLOAD_FOLDER"] = os.path.abspath(UPLOAD_FOLDER)
 
 validation_image_map = [
-  "pictures/tiger.jpg",
-  "pictures/bus.jpg",
-  "pictures/cat.jpg",
-  "pictures/piano.jpg",
-  "pictures/whale.jpg",
+    "pictures/tiger.jpg",
+    "pictures/bus.jpg",
+    "pictures/cat.jpg",
+    "pictures/piano.jpg",
+    "pictures/whale.jpg",
 ]
 
-@app.route ('/config', methods=['POST'])
+
+@app.route("/config", methods=["POST"])
 def doConfiguration():
-   print ("configuring")
-   classify.config("efficientnetv2-m");
-   print ("done")
-   return { "status" : "ok", "data": "condiguration is done" }
-   
+    print("configuring")
+    classify.config("efficientnetv2-m")
+    print("done")
+    return {"status": "ok", "data": "condiguration is done"}
+
+
 def allowed_file(filename):
-   return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route ('/classify', methods=['POST'])
+
+@app.route("/classify", methods=["POST"])
 def doClassification():
-   print ("classifying")
-   if 'picture' not in request.files:
-      return ("bad url", 400)
-   picture = request.files['picture']
-   if not picture :
-      return ("picture is wrong", 400)
-   if picture.filename == '':
-      return ("picture is empty", 400)
-   if not allowed_file(picture.filename):
-      return ("picture is empty", 400)
-   filename = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(picture.filename))
-   picture.save(filename)
-   result = classify.classify(filename);
-   print (result)
-   print ("done")
-   return { "status" : "ok", "data": result, "filename": filename }
+    print("classifying")
+    if "picture" not in request.files:
+        return ("bad url", 400)
+    picture = request.files["picture"]
+    if not picture:
+        return ("picture is wrong", 400)
+    if picture.filename == "":
+        return ("picture is empty", 400)
+    if not allowed_file(picture.filename):
+        return ("picture is empty", 400)
+    filename = os.path.join(
+        app.config["UPLOAD_FOLDER"], secure_filename(picture.filename)
+    )
+    picture.save(filename)
+    result = classify.classify(filename)
+    print(result)
+    print("done")
+    return {"status": "ok", "data": result, "filename": filename}
 
-@app.route ('/validate', methods=['POST'])
+
+@app.route("/validate", methods=["POST"])
 def doValidation():
-   print ("validating")
-   picture_name = "picture.jpg"
-   if 'id' in request.args:
-      index = int(request.args['id'])
-      if index >= 0 and index < len(validation_image_map):
-         picture_name = validation_image_map[index]
-   result = classify.classify(picture_name);
-   print (result)
-   print ("done")
-   return { "status" : "ok", "data": result }
-  
-@app.route ('/', methods=['GET'])
+    print("validating")
+    picture_name = "picture.jpg"
+    if "id" in request.args:
+        index = int(request.args["id"])
+        if index >= 0 and index < len(validation_image_map):
+            picture_name = validation_image_map[index]
+    result = classify.classify(picture_name)
+    print(result)
+    print("done")
+    return {"status": "ok", "data": result}
+
+
+@app.route("/", methods=["GET"])
 def doHome():
-   return '''
+    return """
    <!doctype html>
    <html>
 	   <head>
@@ -97,10 +104,10 @@ def doHome():
 	      </script>
 	   </body>
    </html>
-   '''
+   """
 
-if __name__ == '__main__' :
-   print ("starting")
-   app.run(host='0.0.0.0', port=80, debug=True, use_reloader=False)
-   print ("done")
 
+if __name__ == "__main__":
+    print("starting")
+    app.run(host="0.0.0.0", port=80, debug=True, use_reloader=False)
+    print("done")

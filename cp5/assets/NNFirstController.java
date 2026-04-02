@@ -21,17 +21,17 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class NNFirstController {
 
-    @PostMapping (value="/config")
+    @PostMapping(value = "/config")
     @ResponseStatus(HttpStatus.OK)
-    public String config (@QueryParam( "graph" ) String graph) {
-        
-        System.err.println("Graph="+graph);
-        return "ok"+graph;
+    public String config(@QueryParam("graph") String graph) {
+
+        System.err.println("Graph=" + graph);
+        return "ok" + graph;
     }
 
-    @PostMapping (value="/classify")
+    @PostMapping(value = "/classify")
     @ResponseStatus(HttpStatus.OK)
-    public String classify (@RequestParam( "picture" ) MultipartFile picture) {
+    public String classify(@RequestParam("picture") MultipartFile picture) {
         return "ok";
     }
 }

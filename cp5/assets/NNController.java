@@ -21,16 +21,16 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class NNController {
 
-    @PostMapping (value="/config")
+    @PostMapping(value = "/config")
     @ResponseStatus(HttpStatus.OK)
-    public String config (@QueryParam( "graph" ) String graph) {
-        
-        System.err.println("Graph="+graph);
+    public String config(@QueryParam("graph") String graph) {
+
+        System.err.println("Graph=" + graph);
         String url = "http://127.0.0.1:8081/config?graph={graph}";
 
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(headers);
-        
+
         Map<String, String> params = new TreeMap<>();
         params.put("graph", graph);
 
@@ -40,9 +40,9 @@ public class NNController {
         return response.getBody();
     }
 
-    @PostMapping (value="/classify")
+    @PostMapping(value = "/classify")
     @ResponseStatus(HttpStatus.OK)
-    public String classify (@RequestParam( "picture" ) MultipartFile picture) {
+    public String classify(@RequestParam("picture") MultipartFile picture) {
         String url = "http://127.0.0.1:8081/classify";
 
         HttpHeaders headers = new HttpHeaders();
@@ -50,11 +50,11 @@ public class NNController {
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("picture", picture.getResource());
-        
+
         Map<String, String> params = new TreeMap<>();
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-        
+
         RestTemplate template = new RestTemplate();
         ResponseEntity<String> response = template.exchange(url, HttpMethod.POST, requestEntity, String.class, params);
 

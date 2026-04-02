@@ -49,6 +49,7 @@ def load_image(image_url, image_size=256, dynamic_size=False, max_dynamic_size=5
     img = tf.image.resize_with_pad(img, max_dynamic_size, max_dynamic_size)
   return img, img_raw
 
+## Pas vraiment besoin dans un docker
 def show_image(image, title=''):
   image_size = image.shape[1]
   w = (image_size * 6) // 320

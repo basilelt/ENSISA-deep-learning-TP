@@ -30,6 +30,10 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
 
 WORKDIR /src
 RUN git clone --depth 1 --branch ${TF_VERSION} https://github.com/tensorflow/tensorflow.git
+RUN find /src/tensorflow \( -name 'WORKSPACE' -o -name '*.bzl' -o -name '*.bazelrc' \) -type f -print0 | \
+    xargs -0 sed -i \
+    -e 's#https://storage.googleapis.com/mirror.tensorflow.org/#https://#g' \
+    -e 's#https://mirror.bazel.build/#https://#g'
 
 WORKDIR /src/tensorflow
 ENV TF_NEED_CUDA=0 \

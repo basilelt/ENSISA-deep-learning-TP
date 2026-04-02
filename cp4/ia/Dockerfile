@@ -1,4 +1,4 @@
-FROM tensorflow-local
+FROM basilelt/tensorflow-arm64:2.8.0
 WORKDIR /app
 COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt

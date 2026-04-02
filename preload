@@ -203,8 +203,8 @@ installAll () {
 }
 
 dockerProvisionning () {
-   docker pull tensorflow/tensorflow:2.8.0
-   docker pull openjdk:21
+   docker pull tensorflow-local
+   docker pull eclipse-temurin:21-jdk
    if [ "$WithDockerEngine" == "2" ]; then
       docker pull maven:3.9.9-eclipse-temurin-21-alpine
    fi

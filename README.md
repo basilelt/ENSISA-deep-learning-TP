@@ -21,3 +21,12 @@ deux options exclusives et une obligatoire:
 
 par defaut on fait aucune option et on affiche le help avec un suicide
 
+
+# Adaptation
+Build tensorflow pour ARM64 et dockeriser l'image pour une utilisation locale
+`./build.sh`
+
+
+Remplacer `tensorflow/tensorflow:2.8.0` par `tensorflow-local` dans les Dockerfiles.
+
+Remplacer `openjdk:21` par `eclipse-temurin:21-jdk` dans les Dockerfiles.

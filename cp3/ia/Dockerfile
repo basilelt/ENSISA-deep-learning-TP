@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:2.8.0
+FROM tensorflow-local
 WORKDIR /app
 COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt

@@ -32,7 +32,7 @@ def doValidation():
     picture_name = "picture.jpg"
     result = classify.classify(picture_name)
     print(result)
-    print("done")
+    print("ok")
 
 
 @app.route("/check", methods=["POST"])

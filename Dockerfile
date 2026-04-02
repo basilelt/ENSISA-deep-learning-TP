@@ -42,7 +42,7 @@ ENV TF_NEED_CUDA=0 \
 # Non-interactive configure using defaults suitable for CPU-only build.
 RUN yes "" | ./configure
 
-RUN bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package
+RUN bazel build --config=opt --jobs=2 --local_ram_resources=4096 //tensorflow/tools/pip_package:build_pip_package
 RUN ./bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tf_pkg
 
 FROM python:3.9-slim-bullseye

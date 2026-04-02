@@ -24,6 +24,7 @@ def doConfiguration():
     print("configuring")
     classify.config("efficientnetv2-m")
     print("done")
+    return "ok\n"
 
 
 @app.route("/validate", methods=["POST"])
@@ -32,7 +33,7 @@ def doValidation():
     picture_name = "picture.jpg"
     result = classify.classify(picture_name)
     print(result)
-    print("ok")
+    return result
 
 
 @app.route("/check", methods=["POST"])
